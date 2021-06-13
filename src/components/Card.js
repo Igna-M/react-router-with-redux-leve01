@@ -12,8 +12,15 @@ class Card extends React.Component {
     //     this.setState({user:user})
     // }
 
+    onButtonClick = () => {
+        let id = this.props.card.id;
+        this.props.deleteCard(id);
+        this.props.history.push('/contact');
+    }
+
     render(){
         // const { user } = this.state
+        // console.log(this.props);
         const { title, body } = this.props.card;
         return (
             <div 
@@ -22,6 +29,9 @@ class Card extends React.Component {
             >
                 <h3 className="ui header">{title}</h3>    
                 <p>{body}</p>
+                <button className="ui primary right floated button" onClick={this.onButtonClick}>
+                    Delete
+                </button>
                 {/* <p>About: You can now view 12_react_router_redux in the browser.</p> */}
             </div>
         )
@@ -30,6 +40,7 @@ class Card extends React.Component {
     
 }
 
+
 const mapStateToProps = (state, ownProps) =>{
     let title = ownProps.match.params.user;
     return {
@@ -37,4 +48,12 @@ const mapStateToProps = (state, ownProps) =>{
     }
 }
 
-export default connect(mapStateToProps)(Card);
+const mapDispatchToProps = (dispatch) => {
+    
+    return {
+        deleteCard: (id) => { dispatch({ type: 'DELETE_CARD', id })}
+    }
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Card);
