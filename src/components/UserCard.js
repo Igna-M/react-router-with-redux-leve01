@@ -2,16 +2,10 @@ import React from 'react'
 import { connect } from 'react-redux';
 import { deleteCard, fetchUsers } from '../actions/CardActions'
 
-class Card extends React.Component {
-
-    // state = {
-    //     user: ''
-    // }
+class UserCard extends React.Component {
 
     componentDidMount(){
-        let user = this.props.match.params.user
-        this.setState({user:user})
-        // this.props.fetchUsers()
+        this.props.fetchUsers()
     }
 
     onButtonClick = () => {
@@ -24,17 +18,19 @@ class Card extends React.Component {
         // const { user } = this.state
         // console.log(this.props);
         // console.log(this.props.users);
-        const { title, body } = this.props.card;
+        const user = this.props.user;
         return (
             <div 
                 className="ui raised very padded text container segment" 
                 style={{marginTop:'80px'}}
             >
-                <h3 className="ui header">{title}</h3>    
-                <p>{body}</p>
-                <button className="ui primary right floated button" onClick={this.onButtonClick}>
+                <h3 className="ui header">{user.name}</h3>    
+                <p>{user.username}:</p>
+                <p>{user.email}</p>
+                <h4>{user.address.city}</h4>
+                {/* <button className="ui primary right floated button" onClick={this.onButtonClick}>
                     Delete
-                </button>
+                </button> */}
                 {/* <p>About: You can now view 12_react_router_redux in the browser.</p> */}
             </div>
         )
@@ -45,19 +41,18 @@ class Card extends React.Component {
 
 
 const mapStateToProps = (state, ownProps) =>{
-    let title = ownProps.match.params.user;
+    let username = ownProps.match.params.username;
     return {
-        card: state.cards.find(card => card.title === title),
-        users: state.users
+        user: state.users.find(user => user.username === username),
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        deleteCard: (id) => { dispatch(deleteCard(id))},
-        // fetchUsers: ( () => { dispatch(fetchUsers())})
+        // deleteCard: (id) => { dispatch(deleteCard(id))},
+        fetchUsers: ( () => { dispatch(fetchUsers())})
     }
 }
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(Card);
+export default connect(mapStateToProps, mapDispatchToProps)(UserCard);

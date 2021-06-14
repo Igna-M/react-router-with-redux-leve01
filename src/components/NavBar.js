@@ -12,6 +12,7 @@ const NavBar = (props) => {
                 <button className="ui button"><Link to="/">Home</Link></button>
                 <button className="ui button"><NavLink to="/about">About</NavLink></button>
                 <button className="ui button"><Link to="/contact">Contact</Link></button>
+                <button className="ui button"><Link to="/users">Users</Link></button>
             </div>
         </nav>
     )
